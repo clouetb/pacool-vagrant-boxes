@@ -28,17 +28,9 @@ sudo yum makecache
 echo "Install rabbitmq-server and dependencies"
 sudo yum install -y erlang rabbitmq-server
 
-echo "Configuring limits"
-sudo mkdir -p /etc/systemd/system/rabbitmq-server.service.d
-cat > limits.conf << __EOF__
-[Service]
-LimitNOFILE=64000
-__EOF__
-sudo mv limits.conf /etc/systemd/system/rabbitmq-server.service.d
-
 echo "Enable rabbitmq-server autostart"
-sudo chkconfig rabbitmq-server on
-sudo service rabbitmq-server start
+sudo /sbin/service rabbitmq-server start
+sudo /sbin/chkconfig rabbitmq-server on
 
 echo "Opening ports"
 for PORT in 4369 5672 5671 25672 15672 61613 61614 1883 8883 15674 15675 15692
