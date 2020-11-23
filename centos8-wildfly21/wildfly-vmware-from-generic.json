@@ -1,0 +1,32 @@
+{
+  "variables": {
+    "box_version": "{{env `VERSION`}}"
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "wildfly.sh"
+      ],
+      "execute_command": "{{.Vars}} /bin/bash '{{.Path}}'",
+      "pause_before": "10s",
+      "start_retry_timeout": "15m",
+      "expect_disconnect": "true",
+      "only": [
+        "centos8-wildfly21-vmware"
+      ]
+    }
+  ],
+  "builders": [
+    {
+        "name": "centos8-wildfly21-vmware",
+        "box_name": "centos8-wildfly21",
+        "communicator": "ssh",
+        "template": "Vagrantfile.wildfly",
+        "source_path": "generic/centos8",
+        "provider": "vmware_desktop",
+        "output_dir": "output",
+        "type": "vagrant"
+    }
+  ]
+}
